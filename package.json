@@ -24,7 +24,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "build:dev": "env-cmd -f .env.dev react-scripts build",
     "build:stg": "env-cmd -f .env.stg react-scripts build",
     "build:prd": "env-cmd -f .env.prd react-scripts build",
