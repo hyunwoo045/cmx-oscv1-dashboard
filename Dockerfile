@@ -3,9 +3,12 @@ FROM node:16-alpine
 WORKDIR /usr/commax/app
 
 COPY package*.json ./
-RUN npm build
+RUN npm install
 
-RUN mkdir ./build
-COPY ./build ./build
+RUN npm install -g serve
 
-CMD ["serve", "-s", "build"]
+COPY . .
+
+RUN npm run build
+
+ENTRYPOINT ["serve", "-s", "build"]
