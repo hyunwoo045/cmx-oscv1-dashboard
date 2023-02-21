@@ -20,9 +20,11 @@ const SearchBar = (props) => {
 
             setOptions(ops);
         }
-        fetchData().then(() => {
-        });
-    }, []);
+
+        if (props.modelNameRequired) {
+            fetchData().then(() => {});
+        }
+    }, [props.modelNameRequired]);
 
     const onChangeUserId = (e) => props.setUserId(e.target.value);
 
