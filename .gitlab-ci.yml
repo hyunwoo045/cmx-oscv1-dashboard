@@ -5,11 +5,16 @@ stages:
 build-job:
   stage: build
   script:
-    - docker build . -t cloudv1-osc-dashboard
+    - DOCKERFILE=Dockerfile-$CI_COMMIT_BRANCH
+    - >
+      if [ "$CI_COMMIT_BRANCH" = "master" ]; then
+        DOCKERFILE=Dockerfile
+      fi
+    - docker build -f $DOCKERFILE . -t cloudv1-osc-dashboard
 
 deploy-job:
   stage: deploy
-  needs: ["build-job"]
+  needs: [ "build-job" ]
   script:
     - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 518604182814.dkr.ecr.ap-northeast-2.amazonaws.com
     - TAG="$CI_COMMIT_BRANCH"
