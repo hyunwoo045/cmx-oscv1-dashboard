@@ -1,0 +1,21 @@
+$navHeight: 85px;
+
+.content {
+  display: flex;
+  height: calc(100vh - #{$navHeight});
+}
+
+.content-wrapper {
+  padding: 20px;
+  background-color: #ffffff;
+  height: calc(100vh - #{$navHeight});
+  overflow: scroll;
+  min-width: 85vw;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  height: 65px;
+  margin-bottom: 40px;
+}
