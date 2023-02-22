@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './Sidebar.scss'
 import {Button, Menu} from "antd";
 import {
+    HomeOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     MobileOutlined,
@@ -21,12 +22,12 @@ const Sidebar = () => {
     }
 
     const contents = [
-        // {
-        //     key: '0',
-        //     label: 'Home',
-        //     icon: <HomeOutlined/>,
-        //     onClick: () => navigate('/home')
-        // },
+        {
+            key: '0',
+            label: 'Home',
+            icon: <HomeOutlined/>,
+            onClick: () => navigate('/home')
+        },
         {
             key: '1',
             icon: <TabletOutlined/>,

@@ -11,6 +11,7 @@ import {KTCommandLog} from "../../../api/log";
 import {matchErrMsg} from "../../../utils";
 import errorMessages from "../../../constant/error.messages";
 import moment from "moment";
+import {withCredentials} from "../../../hocs";
 
 const KTAppControl = () => {
 
@@ -272,4 +273,4 @@ const KTAppControl = () => {
     )
 }
 
-export default KTAppControl;
+export default withCredentials(KTAppControl);

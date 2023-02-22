@@ -5,6 +5,7 @@ import {initLog} from "../../../api/log";
 import {checkRegistration} from "../../../api/user";
 import AuthLogs from "./tabs/AuthLogs";
 import Gateways from "./tabs/Gateways";
+import {withCredentials} from "../../../hocs";
 
 const HomeLogin = () => {
 
@@ -140,4 +141,4 @@ const HomeLogin = () => {
     )
 }
 
-export default HomeLogin;
+export default withCredentials(HomeLogin);

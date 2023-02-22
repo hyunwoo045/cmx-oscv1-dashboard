@@ -1,55 +1,61 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Form, Input, Layout, message, Space} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {PageHeader} from '@ant-design/pro-layout';
-import {auditLog, lastLogin, login, logout, getUser} from "../../api/admin";
-import {ChangePwModal} from "../ChangePassword";
+import {login, tokenAdmin} from "../../api/admin";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {setUserInfo} from "../../store/adminSlice";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const [userId, setId] = useState("");
     const [password, setPassword] = useState("");
-    const onClickLoginBtn = async () => {
-        let isInit;
 
-        const {result} = await getUser(userId, password);
-        if (result[0].init === "Y") isInit = true;
-        else if (result[0].init === "N") isInit = false;
-        else alert('Unknown Error');
+    useEffect(() => {
+        const token = localStorage.getItem('token');
 
-        const loginResponse = await login(userId, password);
-        const loginSuccess = loginResponse.success;
-        const loginResult = loginResponse.result;
-        if (loginSuccess) {
-            if (!loginResult) {
-                const auditLogResponse = await auditLog(userId, "ClickLoginBtn", `로그인 실패 (ID: ${userId})`);
-                if (!auditLogResponse.success) alert('Network Error: 로그 입력에 실패하였습니다. 관리자에 문의하세요.');
-
-                alert("비밀번호를 다시 확인하여 주세요.");
-            } else {
-                if (isInit) {
-                    await logout();
-                    ChangePwModal({userId});
-                } else if (!isInit) {
-                    await lastLogin(userId, password);
-                    const auditLogResponse = await auditLog(userId, "ClickLoginBtn", `로그인 성공 (ID: ${userId})`);
-                    if (!auditLogResponse.success) alert('Network Error: 로그 입력에 실패하였습니다. 관리자에 문의하세요.');
-
-                    // TODO: navigate to /home
-                    message.success('로그인 성공!', 2);
+        async function fetchData(token) {
+            const response = await tokenAdmin(token);
+            if (response) {
+                const payload = {
+                    status: true,
+                    userId: response.userId,
+                    role: response.role,
+                    token: response.token,
+                    exp: response.exp
                 }
+                dispatch(setUserInfo(payload));
+                navigate('/home')
             }
-        } else {
-            const auditLogResponse = await auditLog(userId, "ClickLoginBtn", `로그인 실패 (ID: ${userId})`);
-            if (!auditLogResponse.success) alert('Network Error: 로그 입력에 실패하였습니다. 관리자에 문의하세요.');
+        }
 
-            alert('존재하지 않는 아이디 입니다.');
-            window.location.reload();
+        if (token) fetchData(token).then();
+    }, [dispatch, navigate])
+
+    const onClickLoginBtn = async () => {
+        const response = await login(userId, password);
+        if (response.success) {
+            const payload = {
+                status: true,
+                userId: response.result.userId,
+                role: response.result.role,
+                token: response.result.token,
+                exp: response.result.exp
+            }
+            dispatch(setUserInfo(payload))
+
+            localStorage.setItem('token', response.result.token);
+            navigate('/home');
+        } else {
+            message.error("로그인 실패. 아이디 혹은 패스워드를 확인해주세요.");
         }
     }
 
     const changeId = (e) => setId(e.target.value);
     const changePw = (e) => setPassword(e.target.value);
-
 
     return (
         <Layout style={{minHeight: "100vh"}}>

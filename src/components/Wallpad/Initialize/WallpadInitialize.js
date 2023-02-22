@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Divider, Modal, Space, Table, Tabs} from "antd";
 import {initLog, weekReport} from "../../../api/log";
 import moment from "moment";
@@ -12,8 +12,15 @@ import UserInfo from "./tabs/UserInfo";
 import deviceColumns from "../../../constant/columns/device.columns";
 import {matchErrMsg} from "../../../utils";
 import errorMessages from "../../../constant/error.messages";
+import {withCredentials} from "../../../hocs";
 
-const WallpadInitialize = () => {
+const WallpadInitialize = (props) => {
+    useEffect(() => {
+        const role = props.role;
+        if (role === 'admin') {
+            setButtonStatus(false);
+        }
+    }, [props.role])
 
     const commandErrMsg = errorMessages.HomeIOTControlErrCode.command;
     const reportErrMsg = errorMessages.HomeIOTControlErrCode.report;
@@ -24,7 +31,6 @@ const WallpadInitialize = () => {
     const [buttonStatus, setButtonStatus] = useState(true);
     const [deviceList, setDeviceList] = useState([]);
     const [deviceLogList, setDeviceLogList] = useState([]);
-
 
     const [inputs, setInputs] = useState({
         userId: "",
@@ -180,4 +186,4 @@ const WallpadInitialize = () => {
     )
 }
 
-export default WallpadInitialize;
+export default withCredentials(WallpadInitialize);

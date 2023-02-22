@@ -3,6 +3,7 @@ import {Content} from "antd/es/layout/layout";
 import './Home.scss';
 import {PageHeader} from "@ant-design/pro-layout";
 import CardGrid from "./CardGrid";
+import {withCredentials} from "../../hocs";
 
 const Home = () => {
     return (
@@ -19,4 +20,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default withCredentials(Home);

@@ -55,3 +55,13 @@ export const delUser = async (body) => {
     const response = await api.post(path + "/delete", body);
     return response.data.result;
 }
+
+export const tokenAdmin = async (token) => {
+    const response = await api.get(path + "/token-admin", {
+        headers: {
+            Authorization: token
+        }
+    });
+    if (response.data.success) return response.data.result;
+    else return null;
+}

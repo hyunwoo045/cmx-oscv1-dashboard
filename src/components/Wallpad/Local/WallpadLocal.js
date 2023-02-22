@@ -3,6 +3,7 @@ import {Divider, Space, Table} from "antd";
 import columns from "../../../constant/columns/local.userList.columns";
 import {districtUser} from "../../../api/user";
 import {SearchBar} from "../../SearchBar";
+import {withCredentials} from "../../../hocs";
 
 const WallpadLocal = () => {
 
@@ -55,4 +56,4 @@ const WallpadLocal = () => {
     )
 }
 
-export default WallpadLocal;
+export default withCredentials(WallpadLocal);

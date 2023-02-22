@@ -9,6 +9,7 @@ import {CommentTargets} from "../../CommentTargets";
 import moment from "moment/moment";
 import {initLog, weekReport} from "../../../api/log";
 import {matchErrMsg} from "../../../utils";
+import {withCredentials} from "../../../hocs";
 
 const HomeControl = () => {
 
@@ -116,4 +117,4 @@ const HomeControl = () => {
     )
 }
 
-export default HomeControl;
+export default withCredentials(HomeControl);

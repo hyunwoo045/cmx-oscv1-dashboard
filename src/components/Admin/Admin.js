@@ -6,6 +6,7 @@ import moment from "moment";
 import {delUser, getAllUser, getUser, modify, signup} from "../../api/admin";
 import {auditLog} from "../../api/log";
 import {cookieToObj} from "../../utils";
+import {withCredentials} from "../../hocs";
 
 const Admin = () => {
     const [buttonStatus, setButtonStatus] = useState(true);
@@ -309,4 +310,4 @@ const Admin = () => {
     )
 }
 
-export default Admin;
+export default withCredentials(Admin);

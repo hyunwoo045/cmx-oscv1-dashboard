@@ -7,6 +7,7 @@ import errorMessages from "../../../constant/error.messages";
 import {CommentTargets} from "../../CommentTargets";
 import columns from '../../../constant/columns/log.columns';
 import {getUserResourceInfo} from "../../../api/user";
+import {withCredentials} from "../../../hocs";
 
 const KTAppLogin = () => {
 
@@ -147,4 +148,4 @@ const KTAppLogin = () => {
     )
 }
 
-export default KTAppLogin;
+export default withCredentials(KTAppLogin);

@@ -6,6 +6,7 @@ import errorMessages from "../../../constant/error.messages.js";
 import {CommentTargets} from "../../CommentTargets";
 import columns from "../../../constant/columns/log.columns";
 import {SearchBar} from "../../SearchBar";
+import {withCredentials} from "../../../hocs";
 
 const WallpadPageOpen = () => {
 
@@ -72,4 +73,4 @@ const WallpadPageOpen = () => {
     )
 }
 
-export default WallpadPageOpen;
+export default withCredentials(WallpadPageOpen);

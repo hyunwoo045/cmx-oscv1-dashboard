@@ -6,6 +6,7 @@ import {matchErrMsg} from "../../../utils";
 import errorMessages from "../../../constant/error.messages";
 import {CommentTargets} from "../../CommentTargets";
 import columns from '../../../constant/columns/log.columns';
+import {withCredentials} from "../../../hocs";
 
 const HomeRegister = () => {
 
@@ -72,4 +73,4 @@ const HomeRegister = () => {
     )
 }
 
-export default HomeRegister;
+export default withCredentials(HomeRegister);

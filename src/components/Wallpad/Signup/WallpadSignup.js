@@ -4,6 +4,7 @@ import {SearchBar} from "../../SearchBar";
 import UserRegTab from "./tabs/UserRegTab";
 import IsAuthorized from "./tabs/IsAuthorized";
 import {checkRegistration} from "../../../api/user";
+import {withCredentials} from "../../../hocs";
 
 const WallpadSignup = () => {
 
@@ -72,4 +73,4 @@ const WallpadSignup = () => {
     )
 }
 
-export default WallpadSignup;
+export default withCredentials(WallpadSignup);
