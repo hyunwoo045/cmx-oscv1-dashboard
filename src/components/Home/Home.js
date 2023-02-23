@@ -1,22 +1,16 @@
-import {Space} from "antd";
-import {Content} from "antd/es/layout/layout";
 import './Home.scss';
-import {PageHeader} from "@ant-design/pro-layout";
 import CardGrid from "./CardGrid";
 import {withCredentials} from "../../hocs";
 
 const Home = () => {
     return (
-        <Content style={{margin: '0px 0px', padding: 20, minHeight: "100vh"}} align={"leftcenter"}>
-            <Space>
-                <PageHeader style={{fontWeight: 100}}
-                            title={"COMMAX 홈 화면"}>
-                </PageHeader>
-            </Space>
+        <div className={"content-wrapper"}>
+            <div className={"page-title"}>Commax 운영 관제 시스템</div>
             <div align={"center"}>
                 <CardGrid/>
             </div>
-        </Content>
+        </div>
+
     )
 }
 
