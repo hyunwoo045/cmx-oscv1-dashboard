@@ -26,7 +26,7 @@ const Sidebar = () => {
             key: '0',
             label: 'Home',
             icon: <HomeOutlined/>,
-            onClick: () => navigate('/home')
+            onClick: () => navigate('/')
         },
         {
             key: '1',
