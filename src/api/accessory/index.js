@@ -9,5 +9,5 @@ export const getKTDeviceList = async (body) => {
 
 export const getKTHomeList = async (body) => {
     const response = await api.post(path + "/kt", body);
-    return response.data.result[0];
+    return response.data.result;
 }
