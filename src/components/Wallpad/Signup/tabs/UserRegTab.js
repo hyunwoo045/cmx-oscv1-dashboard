@@ -22,10 +22,10 @@ const UserRegTab = (props) => {
         const result = await getLogsUserReg(closure);
         if (result[0].logs.length !== 0) {
             const matches = matchErrMsg(result[0], registerErrMsg, []);
-            setLogs([...logs, matches]);
+            setLogs([...matches]);
         } else {
             const matches = matchErrMsg(result[1], registerErrMsg, []);
-            setLogs([...logs, matches]);
+            setLogs([...matches]);
         }
 
         setLoading(false);
