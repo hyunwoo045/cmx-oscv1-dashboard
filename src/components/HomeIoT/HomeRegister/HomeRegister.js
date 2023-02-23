@@ -28,6 +28,8 @@ const HomeRegister = () => {
             ...inputs
         }
 
+        console.log(closure);
+
         if (closure.userId.length === 0) {
             alert("유저 아이디는 필수 입력 항목입니다.");
             return;
@@ -41,7 +43,7 @@ const HomeRegister = () => {
         }
         const response = await wallpadRegisterLog(body);
         const responseLogs = matchErrMsg(response[0], gatewayErrMsg, [])
-        setLogs({...logs, ...responseLogs})
+        setLogs([...responseLogs])
 
         setLoading(false);
     }
@@ -54,7 +56,7 @@ const HomeRegister = () => {
                     <SearchBar userIdRequired={true}
                                dateRangeRequired={true}
                                setUserId={onChangeUserId}
-                               setDataRange={onChangeDateRange}
+                               setDateRange={onChangeDateRange}
                                search={searchLog}/>
                 </Space>
                 <div align={"right"}>
