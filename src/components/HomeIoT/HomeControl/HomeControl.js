@@ -7,7 +7,7 @@ import columns from '../../../constant/columns/log.columns';
 import {getSubDevice} from "../../../api/resource";
 import {CommentTargets} from "../../CommentTargets";
 import moment from "moment/moment";
-import {initLog, weekReport} from "../../../api/log";
+import {commandLog, initLog} from "../../../api/log";
 import {matchErrMsg} from "../../../utils";
 import {withCredentials} from "../../../hocs";
 
@@ -73,10 +73,61 @@ const HomeControl = () => {
                 endDate: moment().format('YYYY-MM-DDTHH:mm:ss')
             }
         }
-        const result = await weekReport(closure);
-        const list = matchErrMsg(result[0], reportErrMsg, []);
-        matchErrMsg(result[1], commandErrMsg, list);
-        setDeviceLogs(list);
+        const result = await commandLog(closure);
+
+        const commandLogs = matchErrMsg(result[0], commandErrMsg, []);
+        const reportLogs = matchErrMsg(result[1], reportErrMsg, []);
+        const tmpDeviceLogs = [];
+
+        if (reportLogs.length === 0) {
+            commandLogs.forEach(cLog => {
+                cLog.msg = "월패드에서 디바이스 상태 변경에 대한 report 를 보내지 않음. 확인 필요.";
+                cLog.resTime = null;
+                cLog.tag = 'wallpad';
+                tmpDeviceLogs.push({...cLog});
+            });
+        } else {
+            commandLogs.forEach(cLog => {
+                let count = 1;
+                reportLogs.forEach(rLog => {
+                    if (rLog.commandId === cLog.commandId) {
+                        const time = moment(rLog.resTime).diff(moment(cLog.reqTime), 'milliseconds');
+                        if (time > 10000) {
+                            tmpDeviceLogs.push({
+                                reqTime: cLog.reqTime,
+                                resTime: rLog.resTime,
+                                responseCode: rLog.responseCode,
+                                errorCode: rLog.errorCode,
+                                commandId: rLog.commandId,
+                                msg: "타임 아웃",
+                                tag: 'wallpad'
+                            });
+                        } else {
+                            tmpDeviceLogs.push({
+                                reqTime: cLog.reqTime,
+                                resTime: rLog.resTime,
+                                responseCode: rLog.responseCode,
+                                errorCode: rLog.errorCode,
+                                commandId: rLog.commandId,
+                                msg: `(리포트)${rLog.msg}`,
+                                tag: rLog.tag
+                            });
+                        }
+                        return false;
+                    } else {
+                        if (count === reportLogs.length) {
+                            cLog.msg = "월패드에서 디바이스 상태 변경에 대한 report 를 보내지 않음. 확인 필요";
+                            cLog.resTime = null;
+                            cLog.tag = 'wallpad';
+                            tmpDeviceLogs.push({...cLog})
+                        }
+                    }
+                    count++;
+                })
+            })
+        }
+
+        setDeviceLogs([...tmpDeviceLogs]);
         setLoading(false);
     }
 
