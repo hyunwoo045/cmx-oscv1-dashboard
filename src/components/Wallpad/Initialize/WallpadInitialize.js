@@ -22,7 +22,6 @@ const WallpadInitialize = (props) => {
         }
     }, [props.role])
 
-    const commandErrMsg = errorMessages.HomeIOTControlErrCode.command;
     const reportErrMsg = errorMessages.HomeIOTControlErrCode.report;
 
     const [loading, setLoading] = useState(false);
@@ -129,8 +128,7 @@ const WallpadInitialize = (props) => {
 
         const result = await weekReport(closure);
         const list = matchErrMsg(result[0], reportErrMsg, []);
-        matchErrMsg(result[1], commandErrMsg, list);
-        setDeviceLogList(list);
+        setDeviceLogList([...list]);
         setLogLoading(false);
     }
 

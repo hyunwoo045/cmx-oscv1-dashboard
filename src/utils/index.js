@@ -9,7 +9,6 @@ export const cookieToObj = (str) => {
 }
 
 export const matchErrMsg = (data, err, log) => {
-    console.log("Data: " + data);
     data.logs.forEach(element => {
         let resultRc = element.responseCode;
         let resultEc = element.errorCode;
