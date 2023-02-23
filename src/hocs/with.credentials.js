@@ -16,7 +16,7 @@ export const withCredentials = (WrappedComponent) => {
                 const response = await tokenAdmin(token);
                 if (!response) {
                     message.warning("세션이 만료되었습니다. 다시 로그인 하세요.").then();
-                    navigate('/');
+                    navigate('/login');
                 }
                 const payload = {
                     status: true,
@@ -36,14 +36,14 @@ export const withCredentials = (WrappedComponent) => {
 
                 if (!token) {
                     message.warning("세션이 만료되었습니다. 다시 로그인 하세요.").then();
-                    navigate('/');
+                    navigate('/login');
                     // return;
                 } else {
                     fetchData(token).then();
                 }
             } else if (admin.status && admin.exp < now) {
                 message.warning("세션이 만료되었습니다. 다시 로그인 하세요").then();
-                navigate('/');
+                navigate('/login');
             }
         }, [admin.exp, admin.status, dispatch, navigate]);
 

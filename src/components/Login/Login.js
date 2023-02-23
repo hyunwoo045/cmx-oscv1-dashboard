@@ -28,7 +28,7 @@ const Login = () => {
                     exp: response.exp
                 }
                 dispatch(setUserInfo(payload));
-                navigate('/home')
+                navigate('/')
             }
         }
 
@@ -48,7 +48,7 @@ const Login = () => {
             dispatch(setUserInfo(payload))
 
             localStorage.setItem('token', response.result.token);
-            navigate('/home');
+            navigate('/');
         } else {
             message.error("로그인 실패. 아이디 혹은 패스워드를 확인해주세요.");
         }

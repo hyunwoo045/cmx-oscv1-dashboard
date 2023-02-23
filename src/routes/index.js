@@ -7,7 +7,7 @@ const routes = (
         <Routes>
             <Route path={"/login"} element={<Pages.Login/>}/>
             <Route path={"/"} element={<Pages.Main/>}>
-                <Route path={"/home"} element={<Pages.Home/>}/>
+                <Route path={"/"} element={<Pages.Home/>}/>
                 <Route path={"/admin"} element={<Pages.Admin/>}/>
 
                 <Route path={"/wallpad_pageopen"} element={<Pages.WallpadPageOpen/>}/>
