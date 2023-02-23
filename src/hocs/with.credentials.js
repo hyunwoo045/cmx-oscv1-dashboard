@@ -12,7 +12,6 @@ export const withCredentials = (WrappedComponent) => {
         const navigate = useNavigate();
 
         useEffect(() => {
-            console.log("HOC");
             async function fetchData(token) {
                 const response = await tokenAdmin(token);
                 if (!response) {
@@ -33,20 +32,16 @@ export const withCredentials = (WrappedComponent) => {
 
             const now = Math.floor(Date.now() / 1000);
             if (!admin.status) {
-                console.log("store is empty")
                 const token = localStorage.getItem('token');
 
                 if (!token) {
-                    console.log("no token");
                     message.warning("세션이 만료되었습니다. 다시 로그인 하세요.").then();
                     navigate('/');
                     // return;
                 } else {
-                    console.log("have token");
                     fetchData(token).then();
                 }
             } else if (admin.status && admin.exp < now) {
-                console.log("token is expired");
                 message.warning("세션이 만료되었습니다. 다시 로그인 하세요").then();
                 navigate('/');
             }

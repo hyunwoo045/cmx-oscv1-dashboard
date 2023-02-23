@@ -14,3 +14,5 @@ export {default as HomeIoTRegister} from './HomeIoT/Register';
 export {default as KTAppLogin} from './KTApp/Login';
 export {default as KTAppControl} from './KTApp/Control';
 export {default as KTAppPublic} from './KTApp/Public';
+
+export {default as Main} from './Main';

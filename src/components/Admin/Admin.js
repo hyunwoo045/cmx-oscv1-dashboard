@@ -15,6 +15,7 @@ const Admin = (props) => {
     const [logLoading, setLogLoading] = useState(false);
 
     useEffect(() => {
+        console.log(">> admin");
         async function fetchData() {
             const userList = await getAllUser();
             setUserList(userList);

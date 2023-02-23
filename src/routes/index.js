@@ -1,20 +1,14 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import * as Pages from "../pages";
-import {Header as HeaderComponent, Sidebar as SidebarComponent} from "../components";
 
 const routes = (
     <Router>
         <Routes>
-            <Route exact path={"/"} element={<Pages.Login/>}/>
-        </Routes>
-
-        <HeaderComponent/>
-        <div className={"content"}>
-            <SidebarComponent/>
-            <Routes>
-                <Route exact path={"/home"} element={<Pages.Home/>}/>
-                <Route exact path={"/admin"} element={<Pages.Admin/>}/>
+            <Route path={"/login"} element={<Pages.Login/>}/>
+            <Route path={"/"} element={<Pages.Main/>}>
+                <Route path={"/home"} element={<Pages.Home/>}/>
+                <Route path={"/admin"} element={<Pages.Admin/>}/>
 
                 <Route path={"/wallpad_pageopen"} element={<Pages.WallpadPageOpen/>}/>
                 <Route path={"/wallpad_signup"} element={<Pages.WallpadSignup/>}/>
@@ -28,8 +22,8 @@ const routes = (
                 <Route path={"/kt_login"} element={<Pages.KTAppLogin/>}/>
                 <Route path={"/kt_control"} element={<Pages.KTAppControl/>}/>
                 {/*<Route path={"/kt_public"} element={<Pages.KTAppPublic/>}/>*/}
-            </Routes>
-        </div>
+            </Route>
+        </Routes>
     </Router>
 );
 
