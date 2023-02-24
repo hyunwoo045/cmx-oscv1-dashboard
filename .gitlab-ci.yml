@@ -6,10 +6,6 @@ build-job:
   stage: build
   script:
     - DOCKERFILE=Dockerfile-$CI_COMMIT_BRANCH
-    - >
-      if [ "$CI_COMMIT_BRANCH" = "master" ]; then
-        DOCKERFILE=Dockerfile
-      fi
     - docker build -f $DOCKERFILE . -t cloudv1-osc-dashboard
 
 deploy-job:
