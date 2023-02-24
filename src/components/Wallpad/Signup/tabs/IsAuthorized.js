@@ -14,15 +14,13 @@ const IsAuthorized = (props) => {
 
     const searchLog = async () => {
         setLoading(true);
-        setLogs([]);
-
         const closure = {
             ...props.closure
         }
         const result = await getLogsUserAuth(closure);
 
         const list = matchErrMsg(result[0], registerErrMsg, []);
-        setLogs([...logs, list]);
+        setLogs([...list]);
 
         setLoading(false);
     }

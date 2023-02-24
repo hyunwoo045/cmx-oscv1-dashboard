@@ -24,10 +24,10 @@ const WallpadLocal = () => {
         if (closure.center.length === 0) {
             alert("단지코드는 필수 입력 항목입니다.");
             return;
-        } else {
-            const result = await districtUser(closure);
-            setResourceData(prevState => [...prevState, result]);
         }
+
+        const result = await districtUser(closure);
+        setResourceData([...result]);
         setLoading(false);
     }
 

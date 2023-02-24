@@ -21,7 +21,6 @@ const WallpadPageOpen = () => {
 
     const searchLog = async () => {
         setLoading(true);
-        setLogs([]);
 
         const closure = {
             keywords: {...inputs}
@@ -32,14 +31,9 @@ const WallpadPageOpen = () => {
             return;
         }
 
-
         const response = await wallpadLoginLog(closure);
-        if (response.success) {
-            const list = matchErrMsg(response.result[0], loginPlainErrMsg, []);
-            setLogs([...logs, list]);
-        } else {
-            setLogs([]);
-        }
+        const list = matchErrMsg(response.result[0], loginPlainErrMsg, []);
+        setLogs([...list]);
 
         setLoading(false);
     }

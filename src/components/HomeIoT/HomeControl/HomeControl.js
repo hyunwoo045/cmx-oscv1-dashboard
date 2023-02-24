@@ -32,7 +32,6 @@ const HomeControl = () => {
 
     const searchSubDevice = async () => {
         setLoading(true);
-        setDeviceList([]);
 
         const closure = {...inputs};
         if (closure.userId.length === 0) {
@@ -57,7 +56,7 @@ const HomeControl = () => {
                 })
             })
         })
-        setDeviceList(list);
+        setDeviceList([...list]);
         setLoading(false);
     }
 
