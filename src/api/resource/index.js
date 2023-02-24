@@ -1,22 +1,37 @@
 import api from '../api';
+import {handleResponseError} from "../../common";
 
 const path = "/api/resources"
 
 export const getModelNames = async () => {
-    const response = await api.get(path + "/model-name");
-    return response.data.result;
+    try {
+        const response = await api.get(path + "/model-name");
+        return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }
 
 export const getSubDevice = async (userId) => {
-    const response = await api.get(path + "/sub-device", {params: {userId}});
-    if (response.data.success) {
+    try {
+        const response = await api.get(path + "/sub-device", {params: {userId}});
         return response.data.result;
-    } else {
-        alert(response.data.error);
+    } catch (error) {
+        handleResponseError(error);
+        return null;
     }
+
 }
 
 export const getGatewaysLog = async (body) => {
-    const response = await api.post(path + "/log/gateways", body);
-    if (response.data.success) return response.data.result;
+    try {
+        const response = await api.post(path + "/log/gateways", body);
+        return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }

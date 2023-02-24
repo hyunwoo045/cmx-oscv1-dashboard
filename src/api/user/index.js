@@ -1,4 +1,5 @@
 import api from '../api';
+import {handleResponseError} from "../../common";
 
 const path = "/api/users"
 export const initStatusLog = async (userId, userNo) => {
@@ -14,33 +15,66 @@ export const initStatusLog = async (userId, userNo) => {
 }
 
 export const districtUser = async (body) => {
-    const response = await api.post(path + "districtuser", body);
-    if (response.data.success) {
+    try {
+        const response = await api.post(path + "districtuser", body);
         return response.data.result;
-    } else alert(response.data.error);
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }
 
 export const checkRegistration = async (userId) => {
-    const response = await api.get(path + `/resource?userId=${userId}`);
-    if (response.data.success) return response.data.result;
+    try {
+        const response = await api.get(path + `/resource?userId=${userId}`);
+        if (response.data.success) return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
 }
 
 export const getLogsUserReg = async (body) => {
-    const response = await api.post(path + "/log/reg-user", body);
-    if (response.data.success) return response.data.result;
+    try {
+        const response = await api.post(path + "/log/reg-user", body);
+        return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }
 
 export const getLogsUserAuth = async (body) => {
-    const response = await api.post(path + "/log/auth", body);
-    if (response.data.success) return response.data.result;
+    try {
+        const response = await api.post(path + "/log/auth", body);
+        if (response.data.success) return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }
 
 export const getLogsOauth = async (body) => {
-    const response = await api.post(path + "/log/oauth", body);
-    if (response.data.success) return response.data.result;
+    try {
+        const response = await api.post(path + "/log/oauth", body);
+        if (response.data.success) return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }
 
 export const getUserResourceInfo = async (userId) => {
-    const response = await api.get(path + `/resource/info?userId=${userId}`);
-    if (response.data.success) return response.data.result;
+    try {
+        const response = await api.get(path + `/resource/info?userId=${userId}`);
+        if (response.data.success) return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+
 }
