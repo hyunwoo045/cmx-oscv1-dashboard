@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './SearchBar.scss';
 import {getModelNames} from "../../api/resource";
 import {AutoComplete, Button, DatePicker, Input} from "antd";
+import moment from "moment";
 
 const SearchBar = (props) => {
 
@@ -32,7 +33,12 @@ const SearchBar = (props) => {
 
     const onChangeDistrictCd = (e) => props.setDistrictCd(e.target.value);
 
-    const onChangeDate = (value) => props.setDateRange(value);
+    const onChangeDate = (dates, dateStrings) => {
+        props.setDateRange([
+            moment(dateStrings[0], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm:ss'),
+            moment(dateStrings[1], 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DDTHH:mm:ss')
+        ]);
+    }
 
     const onSelectModelName = (value, option) => {
         props.setModelName(value)
