@@ -1,47 +1,46 @@
 import React from "react";
 import './Header.scss';
+import {useSelector} from "react-redux";
+import {selectAdmin} from "../../store/adminSlice";
+import {useNavigate} from "react-router-dom";
+import {Dropdown, Space} from "antd";
 
 const CommonHeader = () => {
+    const adminInfo = useSelector(selectAdmin);
+    const navigate = useNavigate();
 
-    // const onUserMenuClick = async (item) => {
-    //     if (item.key === "logout") {
-    //         await logout();
-    //         navigate('/');
-    //     } else if (item.key === "chpw") {
-    //         ChangePwModal();
-    //     }
-    // }
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
 
-    // const userMenu = (
-    //     <Menu onClick={onUserMenuClick}
-    //           theme="dark"
-    //           items={[
-    //               {
-    //                   key: 'chpw',
-    //                   label: '비밀번호 변경'
-    //               },
-    //               {
-    //                   key: 'logout',
-    //                   label: '로그아웃'
-    //               },
-    //           ]}
-    //     />
-    // );
+    const items = [
+        {
+            label: <div onClick={logout}>로그아웃</div>,
+            key: '0'
+        }
+    ]
 
     return (
         <div className={"header"}>
             <div className={"logo"}>
                 <img width={200} src={"/images/cmx_logo.png"} alt={"commax_logo"}/>
             </div>
-            {/*<div className={"el-right card-grid"}>*/}
-            {/*    <Dropdown trigger={["click"]}*/}
-            {/*              placement="bottomLeft">*/}
-            {/*        <Space direction="horizontal" align="start">*/}
-            {/*            <Avatar className={"card-grid"} icon={<UserOutlined/>}/>*/}
-            {/*            <span className={"color-white"}>admin</span>*/}
-            {/*        </Space>*/}
-            {/*    </Dropdown>*/}
-            {/*</div>*/}
+            <div className={"user-menus"}>
+                {(adminInfo.role === "admin")
+                    ? <>
+                        <div className={"user-menu"} onClick={() => navigate('/admin')}>설정</div>
+                        <div className={'v-divider'}>|</div>
+                    </>
+                    : null}
+                <div className={"user-menu"}>
+                    <Dropdown menu={{items}} trigger={['click']}>
+                        <Space>
+                            {adminInfo.userId}({adminInfo.role})
+                        </Space>
+                    </Dropdown>
+                </div>
+            </div>
         </div>
     )
 }
