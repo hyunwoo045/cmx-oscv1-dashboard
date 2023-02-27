@@ -2,16 +2,13 @@ import {Button, Descriptions, Divider, Space, Table, Tabs} from "antd";
 import {SearchBar} from "../../SearchBar";
 import {useState} from "react";
 import {KTLoginLog} from "../../../api/log";
-import {matchErrMsg} from "../../../utils";
-import errorMessages from "../../../constant/error.messages";
+import {logParser} from "../../../utils";
 import {CommentTargets} from "../../CommentTargets";
 import columns from '../../../constant/columns/log.columns';
 import {getUserResourceInfo} from "../../../api/user";
 import {withCredentials} from "../../../hocs";
 
 const KTAppLogin = () => {
-
-    const loginPlainErrMsg = errorMessages.KTLoginErrCode.loginplain;
 
     const [loading, setLoading] = useState(false);
     const [inputs, setInputs] = useState({
@@ -64,13 +61,10 @@ const KTAppLogin = () => {
             alert("날짜가 정상적으로 입력되지 않았습니다.");
             return;
         }
-        const body = {
-            keywords: {...closure}
-        }
 
-        const response = await KTLoginLog(body);
-        const loginLogs = matchErrMsg(response[0], loginPlainErrMsg, []);
-        setLogs([...logs, loginLogs]);
+        const response = await KTLoginLog(closure);
+        const list = logParser(response, "cloud");
+        setLogs([...list]);
 
         setLoading(false);
     }

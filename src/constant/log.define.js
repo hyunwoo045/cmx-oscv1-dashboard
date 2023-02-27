@@ -65,6 +65,14 @@ const codeDefine = (code, part) => {
             tag: "wallpad",
             message: "요청 POST http헤더 값 application/x-www-form-urlencoded encoding 확인 필요. 요청 BODY 확인 바랍니다."
         },
+        "0171": {
+            tag: "etc",
+            message: "3rd party 를 지원하는 단지의 사용자가 아닙니다."
+        },
+        "0172": {
+            tag: "etc",
+            message: "3rd party 를 지원하는 단지의 사용자가 아닙니다."
+        },
         "0201": {
             tag: "user",
             message: "ID 가 이미 존재합니다. 사용자에게 ID 변경 요청 바랍니다."
