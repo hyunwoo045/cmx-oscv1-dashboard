@@ -22,7 +22,6 @@ export const getSubDevice = async (userId) => {
         handleResponseError(error);
         return null;
     }
-
 }
 
 export const getGatewaysLog = async (body) => {
@@ -33,5 +32,4 @@ export const getGatewaysLog = async (body) => {
         handleResponseError(error);
         return null;
     }
-
 }

@@ -13,6 +13,25 @@ export const getCountryLogs = async (body) => {
     }
 }
 
+export const commandLog = async (body) => {
+    try {
+        const response = await api.post(path + "/command", body);
+        return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+}
+
+export const reportLog = async (body) => {
+    try {
+        const response = await api.post(path + "/report", body);
+        return response.data.result[0];
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+}
 
 /** legacy */
 export const auditLog = async (userId) => {
@@ -55,16 +74,6 @@ export const initLog = async (userId) => {
     }
 }
 
-export const reportLog = async (body) => {
-    try {
-        const response = await api.post(path + "/report", body);
-        return response.data.result[0];
-    } catch (error) {
-        handleResponseError(error);
-        return null;
-    }
-}
-
 export const userRegisterLog = async (body) => {
     try {
         const response = await api.post(path + "/user/register", body);
@@ -79,16 +88,6 @@ export const loginQueryLog = async (body) => {
     try {
         const response = await api.post(path + "/login-query", body);
         if (response.data.success) return response.data.result;
-    } catch (error) {
-        handleResponseError(error);
-        return null;
-    }
-}
-
-export const commandLog = async (body) => {
-    try {
-        const response = await api.post(path + "/command", body);
-        return response.data.result;
     } catch (error) {
         handleResponseError(error);
         return null;

@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Table} from "antd";
 import columns from '../../../../constant/columns/log.columns';
-import {logParser, matchErrMsg} from "../../../../utils";
+import {logParser} from "../../../../utils";
 import {getLogsUserAuth} from "../../../../api/user";
-import errorMessages from "../../../../constant/error.messages";
-import {CommentTargets} from "../../../CommentTargets";
 
 const IsAuthorized = (props) => {
 
@@ -16,7 +14,7 @@ const IsAuthorized = (props) => {
         const closure = {...props.closure}
 
         const result = await getLogsUserAuth(closure);
-        const list = logParser(result);
+        const list = logParser(result, "wallpad");
         setLogs([...list]);
 
         setLoading(false);

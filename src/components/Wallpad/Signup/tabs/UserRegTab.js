@@ -14,7 +14,7 @@ const UserRegTab = (props) => {
 
         const closure = {...props.closure}
         const response = await getLogsUserReg(closure);
-        const list = logParser(response);
+        const list = logParser(response, "wallpad");
         setLogs([...list]);
 
         setLoading(false);

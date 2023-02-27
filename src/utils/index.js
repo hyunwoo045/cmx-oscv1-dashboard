@@ -19,14 +19,14 @@ export const matchErrMsg = (data, err, log) => {
     return log;
 }
 
-export const logParser = (logs) => {
+export const logParser = (logs, part) => {
     const result = [];
     logs.forEach(log => {
-        if (log.responseCode === 500) {
+        if (log.responseCode >= 500) {
             log.tag = 'cloud';
             log.message = '서버 내부 오류입니다. 클라우드 팀에 문의 바랍니다.';
         } else if (log.errorCode !== null) {
-            const def = codeDefine(log.errorCode);
+            const def = codeDefine(log.errorCode, part);
             if (def !== undefined) {
                 log.tag = def.tag;
                 log.message = def.message;

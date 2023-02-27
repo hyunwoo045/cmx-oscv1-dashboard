@@ -25,7 +25,7 @@ const WallpadPageOpen = () => {
             return;
         }
         const response = await getCountryLogs(closure);
-        const list = logParser(response);
+        const list = logParser(response, "wallpad");
         setLogs([...list]);
 
         setLoading(false);

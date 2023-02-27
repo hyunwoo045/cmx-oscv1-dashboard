@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {SearchBar} from "../../SearchBar";
 import {Divider, Space, Table, Tabs} from "antd";
 import homeListColumns from "../../../constant/columns/homeList.columns";
-import commandHistoryColumns from "../../../constant/columns/commandHistory.columns";
+import commandHistoryColumns from "../../../constant/columns/command.columns";
 import accessoryColumns from '../../../constant/columns/accessory.columns';
 import logColumns from '../../../constant/columns/log.columns';
 import {getKTDeviceList, getKTHomeList} from "../../../api/accessory";

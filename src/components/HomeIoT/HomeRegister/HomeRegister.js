@@ -2,15 +2,12 @@ import {Space, Table} from "antd";
 import {SearchBar} from "../../SearchBar";
 import {useState} from "react";
 import {wallpadRegisterLog} from "../../../api/log";
-import {matchErrMsg} from "../../../utils";
-import errorMessages from "../../../constant/error.messages";
-import {CommentTargets} from "../../CommentTargets";
+import {logParser} from "../../../utils";
 import columns from '../../../constant/columns/log.columns';
 import {withCredentials} from "../../../hocs";
 
 const HomeRegister = () => {
 
-    const gatewayErrMsg = errorMessages.HomeIOTResisterErrCode.gateways;
     const [loading, setLoading] = useState(false);
     const [inputs, setInputs] = useState({
         userId: "",
@@ -28,8 +25,6 @@ const HomeRegister = () => {
             ...inputs
         }
 
-        console.log(closure);
-
         if (closure.userId.length === 0) {
             alert("유저 아이디는 필수 입력 항목입니다.");
             return;
@@ -38,12 +33,9 @@ const HomeRegister = () => {
             return;
         }
 
-        const body = {
-            keywords: {...closure}
-        }
-        const response = await wallpadRegisterLog(body);
-        const responseLogs = matchErrMsg(response[0], gatewayErrMsg, [])
-        setLogs([...responseLogs])
+        const response = await wallpadRegisterLog(closure);
+        const list = logParser(response, "mobile");
+        setLogs([...list])
 
         setLoading(false);
     }
@@ -60,10 +52,7 @@ const HomeRegister = () => {
                                search={searchLog}/>
                 </Space>
                 <div align={"right"}>
-                    <div style={{minWidth: '75vw'}}></div>
-                    <Space direction={"horizontal"} align={"start"}>
-                        <CommentTargets/>
-                    </Space>
+                    <div style={{minWidth: '75vw', marginTop: 50}}></div>
                 </div>
                 <div style={{width: "75vw"}}>
                     <Table columns={columns()}

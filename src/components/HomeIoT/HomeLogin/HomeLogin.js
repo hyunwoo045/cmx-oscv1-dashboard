@@ -32,7 +32,7 @@ const HomeLogin = () => {
 
     const onChangeDateRange = ([startDate, endDate]) => setInputs({...inputs, startDate, endDate});
 
-    const searchLogs = async () => {
+    const search = async () => {
         const closure = {
             userId: inputs.userId,
             startDate: inputs.startDate,
@@ -77,7 +77,7 @@ const HomeLogin = () => {
                                dateRangeRequired={true}
                                setUserId={onChangeUserId}
                                setDateRange={onChangeDateRange}
-                               search={searchLogs}/>
+                               search={search}/>
                 </Space>
                 <Descriptions>
                     <Descriptions.Item label="사용자 및 모바일 등록 여부"
