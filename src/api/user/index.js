@@ -2,6 +2,17 @@ import api from '../api';
 import {handleResponseError} from "../../common";
 
 const path = "/api/users"
+
+export const checkRegistration = async (userId) => {
+    try {
+        const response = await api.get(path + `/resource?userId=${userId}`);
+        if (response.data.success) return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+}
+
 export const initStatusLog = async (userId, userNo) => {
     const response = await api.get(path + "/init-status", {params: {userId, userNo}});
     if (response.data.success) {
@@ -16,19 +27,8 @@ export const initStatusLog = async (userId, userNo) => {
 
 export const districtUser = async (body) => {
     try {
-        const response = await api.post(path + "districtuser", body);
+        const response = await api.post(path + "/districtuser", body);
         return response.data.result;
-    } catch (error) {
-        handleResponseError(error);
-        return null;
-    }
-
-}
-
-export const checkRegistration = async (userId) => {
-    try {
-        const response = await api.get(path + `/resource?userId=${userId}`);
-        if (response.data.success) return response.data.result;
     } catch (error) {
         handleResponseError(error);
         return null;
@@ -76,5 +76,13 @@ export const getUserResourceInfo = async (userId) => {
         handleResponseError(error);
         return null;
     }
+}
 
+export const initializeUser = async (body) => {
+    try {
+        await api.delete(path, body);
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
 }

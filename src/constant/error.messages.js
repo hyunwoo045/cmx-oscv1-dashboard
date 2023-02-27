@@ -10,6 +10,10 @@ export default {
     },
     WallpadSignupErrCode: {
         register: [
+            // TODO: 1000번 코드에 대한 명확한 정의 필요..
+            {rescode: "500", errcode: "1000", tag: "cloud", messages: "selectResourceModelSeqNo RDB 조회 오류"},
+            {rescode: "503", errcode: "1000", tag: "cloud", messages: "RDB 조회시 오류 발생. 클라우드 서버 확인 요청."},
+
             {
                 rescode: "400",
                 errcode: "0213",
@@ -22,7 +26,6 @@ export default {
                 tag: "wallpad",
                 messages: "필수요청값인 clinet_id 또는 client_secret데이터가 없습니다.  월패드에서 클라우드로 요청하는 /cmx/register/ body 데이터를 확인 바랍니다."
             },
-            {rescode: "503", errcode: "1000", tag: "cloud", messages: "RDB 조회시 오류 발생. 클라우드 서버 확인 요청."},
             {
                 rescode: "401",
                 errcode: "0101",
@@ -53,7 +56,8 @@ export default {
                 tag: "user",
                 messages: "user.username 또는 user.password 형식 오류 발생. 사용자에게 ID/PW 확인 바랍니다."
             },
-            {rescode: "400", errcode: "0201", tag: "user", messages: "같은 ID사용자가 있음. 사용자에게 ID 변경 요청바랍니다."},
+            {
+                rescode: "400", errcode: "0201", tag: "user", messages: "같은 ID사용자가 있음. 사용자에게 ID 변경 요청바랍니다."},
             {
                 rescode: "400",
                 errcode: "0212",
@@ -66,7 +70,6 @@ export default {
                 tag: "wallpad",
                 messages: "월패드에서 /cmx/register api 요청데이터 mac or sn 확인 바랍니다."
             },
-            {rescode: "500", errcode: "1000", tag: "cloud", messages: "selectResourceModelSeqNo RDB 조회 오류"},
             {
                 rescode: "400",
                 errcode: "0203",

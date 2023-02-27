@@ -2,6 +2,7 @@ export * from './Header';
 export * from './Sidebar';
 export * from './UserMenu';
 export * from './CommentTargets';
+export * from './PartCard';
 
 export * from './Admin';
 export * from './Home';

@@ -1,12 +1,4 @@
-export const cookieToObj = (str) => {
-    str = str.split('; ');
-    let result = {};
-    for (let i = 0; i < str.length; i++) {
-        let cur = str[i].split('=');
-        result[cur[0]] = cur[1];
-    }
-    return result;
-}
+import codeDefine from "../constant/log.define";
 
 export const matchErrMsg = (data, err, log) => {
     data.logs.forEach(element => {
@@ -25,4 +17,26 @@ export const matchErrMsg = (data, err, log) => {
     })
 
     return log;
+}
+
+export const logParser = (logs) => {
+    const result = [];
+    logs.forEach(log => {
+        if (log.responseCode === 500) {
+            log.tag = 'cloud';
+            log.message = '서버 내부 오류입니다. 클라우드 팀에 문의 바랍니다.';
+        } else if (log.errorCode !== null) {
+            const def = codeDefine(log.errorCode);
+            if (def !== undefined) {
+                log.tag = def.tag;
+                log.message = def.message;
+            } else {
+                log.tag = 'cloud';
+                log.message = "정의되지 않은 오류입니다. 클라우드 팀에 문의 바랍니다.";
+            }
+        }
+        result.push(log);
+    });
+
+    return result;
 }

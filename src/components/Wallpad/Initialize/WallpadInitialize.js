@@ -1,17 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Divider, Modal, Space, Table, Tabs} from "antd";
-import {initLog, weekReport} from "../../../api/log";
+import {Modal, Space, Table, Tabs} from "antd";
+import {initLog} from "../../../api/log";
 import moment from "moment";
-import {initStatusLog} from "../../../api/user";
+import {initializeUser, initStatusLog} from "../../../api/user";
 import {getSubDevice} from "../../../api/resource";
 import {ExclamationCircleOutlined} from "@ant-design/icons";
-import {CommentTargets} from "../../CommentTargets";
-import logColumns from "../../../constant/columns/log.columns";
 import {SearchBar} from "../../SearchBar";
 import UserInfo from "./tabs/UserInfo";
 import deviceColumns from "../../../constant/columns/device.columns";
-import {matchErrMsg} from "../../../utils";
-import errorMessages from "../../../constant/error.messages";
 import {withCredentials} from "../../../hocs";
 
 const WallpadInitialize = (props) => {
@@ -22,14 +18,10 @@ const WallpadInitialize = (props) => {
         }
     }, [props.role])
 
-    const reportErrMsg = errorMessages.HomeIOTControlErrCode.report;
-
     const [loading, setLoading] = useState(false);
-    const [logLoading, setLogLoading] = useState(false);
     const [userStatus, setUserStatus] = useState("");
     const [buttonStatus, setButtonStatus] = useState(true);
     const [deviceList, setDeviceList] = useState([]);
-    const [deviceLogList, setDeviceLogList] = useState([]);
 
     const [inputs, setInputs] = useState({
         userId: "",
@@ -93,8 +85,9 @@ const WallpadInitialize = (props) => {
         setLoading(false);
     }
 
-    const deleteUser = () => {
-
+    const deleteUser = async () => {
+        const closure = {...inputs};
+        await initializeUser(closure);
     }
 
     const showDeleteConfirm = () => {
@@ -104,32 +97,13 @@ const WallpadInitialize = (props) => {
             content: `${inputs.userId}`,
             okText: '취소',
             cancelText: '확인',
-            okOk() {
-            },
             onCancel() {
-                deleteUser()
+                deleteUser().then(r => {
+                    alert("유저 초기화가 완료되었습니다.");
+                    window.location.reload();
+                })
             }
         })
-    }
-
-    const getWeekReportByDevice = async (nickname, rootUuid, subUuid) => {
-        setLogLoading(true);
-        setDeviceLogList([]);
-
-        const closure = {
-            keywords: {
-                rootUuid,
-                subUuid,
-                gatewayNo: userInfo.resource_no,
-                startDate: moment().subtract(7, 'day').format('YYYY-MM-DDTHH:mm:ss'),
-                endDate: moment().format('YYYY-MM-DDTHH:mm:ss')
-            }
-        }
-
-        const result = await weekReport(closure);
-        const list = matchErrMsg(result[0], reportErrMsg, []);
-        setDeviceLogList([...list]);
-        setLogLoading(false);
     }
 
     const items = [
@@ -145,9 +119,8 @@ const WallpadInitialize = (props) => {
             label: "디바이스 목록",
             key: "2",
             children: <div style={{width: '75vw'}}>
-                디바이스 목록
                 <Table size={"small"}
-                       columns={deviceColumns(getWeekReportByDevice)}
+                       columns={deviceColumns(() => {})}
                        dataSource={deviceList}
                        loading={loading}/>
             </div>
@@ -168,17 +141,6 @@ const WallpadInitialize = (props) => {
                         <Tabs defaultActiveKey={'1'} items={items}/>
                     </Space>
                 </Space>
-                <div>
-                    <Divider orientation={'left'}>최근 일주일 리포트</Divider>
-                    <div style={{minWidth: '75vw'}} align={"right"}>
-                        <CommentTargets/>
-                    </div>
-                    <div style={{width: '75vw'}}>
-                        <Table columns={logColumns()}
-                               dataSource={deviceLogList}
-                               loading={logLoading}/>
-                    </div>
-                </div>
             </Space>
         </div>
     )

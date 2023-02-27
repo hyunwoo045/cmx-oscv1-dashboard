@@ -3,7 +3,7 @@ import {Button, Descriptions} from "antd";
 
 const UserInfo = (props) => {
     return (
-        <div style={{width: 505}}>
+        <div style={{maxWidth: "75vw"}}>
             <Descriptions bordered size={"small"}>
                 <Descriptions.Item label="유저번호"
                                    span={3}>{props.userInfo.member_no}</Descriptions.Item>
@@ -16,7 +16,7 @@ const UserInfo = (props) => {
                 <Descriptions.Item label="센터IP"
                                    span={3}>{props.userInfo.center_ip}</Descriptions.Item>
                 <Descriptions.Item label="동/호"
-                                   span={3}>{props.userInfo.dong}{props.userInfo.ho}</Descriptions.Item>
+                                   span={3}>{props.userInfo.dong} {props.userInfo.ho}</Descriptions.Item>
                 <Descriptions.Item label="모델명"
                                    span={3}>{props.userInfo.model_nm}</Descriptions.Item>
                 <Descriptions.Item label="등록날짜"

@@ -3,6 +3,18 @@ import {handleResponseError} from '../../common';
 
 const path = "/api/logs";
 
+export const getCountryLogs = async (body) => {
+    try {
+        const response = await api.post(path + "/country", body);
+        return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+}
+
+
+/** legacy */
 export const auditLog = async (userId) => {
     try {
         const response = await api.post(path + "/auditlog", {userId});

@@ -2,40 +2,26 @@ import React, {useState} from 'react';
 import {Button, Table} from "antd";
 import columns from '../../../../constant/columns/log.columns';
 import {getLogsUserReg} from "../../../../api/user";
-import {matchErrMsg} from "../../../../utils";
-import errorMessages from "../../../../constant/error.messages";
-import {CommentTargets} from "../../../CommentTargets";
+import {logParser} from "../../../../utils";
 
 const UserRegTab = (props) => {
 
-    const registerErrMsg = errorMessages.WallpadSignupErrCode.register;
     const [loading, setLoading] = useState(false);
     const [logs, setLogs] = useState([]);
 
     const searchLog = async () => {
         setLoading(true);
-        setLogs([]);
 
-        const closure = {
-            ...props.closure
-        }
-        const result = await getLogsUserReg(closure);
-        if (result[0].logs.length !== 0) {
-            const matches = matchErrMsg(result[0], registerErrMsg, []);
-            setLogs([...matches]);
-        } else {
-            const matches = matchErrMsg(result[1], registerErrMsg, []);
-            setLogs([...matches]);
-        }
+        const closure = {...props.closure}
+        const response = await getLogsUserReg(closure);
+        const list = logParser(response);
+        setLogs([...list]);
 
         setLoading(false);
     }
 
     return (
         <div style={{maxWidth: '95vw'}}>
-            <div align={"right"}>
-                <CommentTargets/>
-            </div>
             <Button type={"primary"}
                     onClick={searchLog}>
                 로그 조회
