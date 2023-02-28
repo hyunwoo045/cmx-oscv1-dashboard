@@ -33,3 +33,13 @@ export const getGatewaysLog = async (body) => {
         return null;
     }
 }
+
+export const thirdPartyCommand = async (body) => {
+    try {
+        const response = await api.post(path + "/log/third-party/command")
+        return response.data.result;
+    } catch (error) {
+        handleResponseError(error);
+        return null;
+    }
+}

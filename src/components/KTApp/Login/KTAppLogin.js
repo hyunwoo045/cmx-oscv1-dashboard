@@ -3,7 +3,6 @@ import {SearchBar} from "../../SearchBar";
 import {useState} from "react";
 import {KTLoginLog} from "../../../api/log";
 import {logParser} from "../../../utils";
-import {CommentTargets} from "../../CommentTargets";
 import columns from '../../../constant/columns/log.columns';
 import {getUserResourceInfo} from "../../../api/user";
 import {withCredentials} from "../../../hocs";
@@ -127,9 +126,6 @@ const KTAppLogin = () => {
             </div>
             <div style={{maxWidth: '75vw'}}>
                 <Divider>로그인 이력</Divider>
-                <div align={"right"}>
-                    <CommentTargets/>
-                </div>
                 <Button type={"primary"}
                         onClick={searchLog}>
                     로그 조회
